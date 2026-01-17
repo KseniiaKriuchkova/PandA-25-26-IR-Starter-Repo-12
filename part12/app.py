@@ -13,13 +13,14 @@ from .models import SearchResult, Searcher
 
 from .file_utilities import load_config, load_sonnets, settings
 
+
 def print_results(
     query: str | None,
     results: List[SearchResult],
     highlight_mode: str,
+    total_docs: int,
     query_time_ms: float | None = None,
 ) -> None:
-    total_docs = len(results)
     matched = [r for r in results if r.matches > 0]
 
     line = f'{len(matched)} out of {total_docs} sonnets contain "{query}".'
@@ -91,8 +92,9 @@ def main() -> None:
         elapsed_ms = (time.perf_counter() - start) * 1000
 
         highlight_mode = config.hl_mode if config.highlight else None
+        total_sonnets = len(sonnets)
+        print_results(raw, results, highlight_mode, total_sonnets, elapsed_ms)
 
-        print_results(raw, results, highlight_mode, elapsed_ms)
 
 if __name__ == "__main__":
     main()

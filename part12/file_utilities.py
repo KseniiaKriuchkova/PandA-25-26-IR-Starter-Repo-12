@@ -12,6 +12,7 @@ POETRYDB_URL = "https://poetrydb.org/author,title/Shakespeare;Sonnet"
 
 CACHE_FILENAME = "sonnets.json"
 
+
 class Setting:
 
     def __init__(self, name: str, description: str, config_name: str, *options):
@@ -33,6 +34,7 @@ class Setting:
             return True
 
         return False
+
 
 settings = [
     Setting("highlight", "Highlighting", "highlight", "ON", "OFF"),
@@ -117,10 +119,10 @@ class Configuration:
             print(f"Writing config.json failed.")
 
 
-
 def module_relative_path(name: str) -> str:
     """Return absolute path for a file next to this module."""
     return os.path.join(os.path.dirname(__file__), name)
+
 
 def fetch_sonnets_from_api() -> List[Sonnet]:
     """
@@ -150,6 +152,7 @@ def fetch_sonnets_from_api() -> List[Sonnet]:
         raise RuntimeError(f"Network-related error occurred: {exc}") from exc
 
     return sonnets
+
 
 def load_sonnets() -> List[Sonnet]:
     """
@@ -194,6 +197,7 @@ def load_sonnets() -> List[Sonnet]:
     return [Sonnet(data) for data in sonnets]
 # ------------------------- Config handling ---------------------------------
 DEFAULT_CONFIG = Configuration()
+
 
 def load_config() -> Configuration:
     config_file_path = module_relative_path("config.json")
